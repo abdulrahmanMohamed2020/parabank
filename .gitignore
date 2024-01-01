@@ -3,5 +3,6 @@
 /allure-results
 /target
 /Screenshots
+.gitattributes
 ### Mac OS ###
 .DS_Store
