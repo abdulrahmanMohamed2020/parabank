@@ -1,9 +1,9 @@
 package com.qa.parabank.tests.loan;
 
 import com.qa.parabank.base.BaseTest;
-import com.qa.parabank.pages.HomePage;
-import com.qa.parabank.pages.LoginPage;
-import com.qa.parabank.pages.RequestLoanPage;
+import com.qa.parabank.pages.home.HomePage;
+import com.qa.parabank.pages.login.LoginPage;
+import com.qa.parabank.pages.loan.RequestLoanPage;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;

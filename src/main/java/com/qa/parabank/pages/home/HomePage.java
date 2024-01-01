@@ -1,4 +1,4 @@
-package com.qa.parabank.pages;
+package com.qa.parabank.pages.home;
 
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;

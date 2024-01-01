@@ -1,9 +1,9 @@
-package com.qa.parabank.tests.login;
+package com.qa.parabank.tests.transferfunds;
 
 import com.qa.parabank.base.BaseTest;
-import com.qa.parabank.pages.HomePage;
-import com.qa.parabank.pages.LoginPage;
-import com.qa.parabank.pages.TransferFundsPage;
+import com.qa.parabank.pages.home.HomePage;
+import com.qa.parabank.pages.login.LoginPage;
+import com.qa.parabank.pages.transferfunds.TransferFundsPage;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;

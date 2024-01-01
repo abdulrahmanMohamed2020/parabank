@@ -1,7 +1,12 @@
 package com.qa.parabank.tests.bill;
 
 import com.qa.parabank.base.BaseTest;
-import com.qa.parabank.pages.*;
+import com.qa.parabank.pages.bill.BillPayPage;
+import com.qa.parabank.pages.home.AccountOverviewPage;
+import com.qa.parabank.pages.home.HomePage;
+import com.qa.parabank.pages.home.OpenNewAccountPage;
+import com.qa.parabank.pages.login.LoginPage;
+import com.qa.parabank.pages.login.RegisterPage;
 import com.qa.parabank.util.constants.Constants;
 import com.qa.parabank.util.testdata.UserTestData;
 import org.testng.annotations.DataProvider;
