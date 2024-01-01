@@ -1,0 +1,7 @@
+.idea/
+*.iml
+/allure-results
+/target
+/Screenshots
+### Mac OS ###
+.DS_Store
