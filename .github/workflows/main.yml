@@ -36,16 +36,24 @@ jobs:
           npm install
           npm install playwright
 
+      - name: Install xvfb
+        run: |
+          apt-get update && apt-get install -y xvfb
+
       - name: Build Docker Images
         run: |
           docker-compose build
 
       - name: Start Local Application
         run: |
+          xvfb-run -a docker-compose up -d
+
+      - name: Start Local Application
+        run: |
           docker-compose up -d
 
       - name: Wait for Application to Start
-        run: sleep 30s  # Adjust the sleep time based on how long it takes for your application to start
+        run: sleep 60s 
 
       - name: Run Playwright Java tests
         run: mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng.xml
