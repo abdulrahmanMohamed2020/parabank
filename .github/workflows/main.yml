@@ -43,8 +43,8 @@ jobs:
 
       - name: Add a user with sudo privileges
         run: |
-          docker exec -u 0 -it ${{ runner.container.id }} useradd -m user
-          docker exec -u 0 -it ${{ runner.container.id }} usermod -aG sudo user
+          sudo useradd -m user
+          sudo usermod -aG sudo user
 
       - name: Build Docker Images
         run: |
@@ -52,54 +52,14 @@ jobs:
 
       - name: Start Local Application
         run: |
-          CONTAINER_ID=$(docker ps -q)
-          docker exec -u user -it ${{ runner.container.id }} xvfb-run -a docker-compose up -d
+          docker-compose up -d
 
       - name: Wait for Application to Start
         run: sleep 60s
 
       - name: Run Playwright Java tests
-        run: |
-          CONTAINER_ID=$(docker ps -q)
-          docker exec -u user -it ${{ runner.container.id }} mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng.xml
+        run: mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng.xml
 
       - name: Stop Local Application
         run: |
           docker-compose down
-
-      - name: Get Allure history
-        uses: actions/checkout@v2
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Allure Report action from marketplace
-        uses: simple-elf/allure-report-action@master
-        if: always()
-        id: allure-report
-        with:
-          allure_results: allure-results
-          gh_pages: gh-pages
-          allure_report: allure-report
-          allure_history: allure-history
-          keep_reports: 20
-
-      - name: Deploy report to Github Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v2
-        env:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
-          
-      - name: Post the link to the report
-        if: always()
-        uses: Sibz/github-status-action@v1
-        with: 
-          authToken: ${{secrets.GITHUB_TOKEN}}
-          context: 'Test Summary Report'
-          state: 'success'
-          sha: ${{github.event.pull_request.head.sha || github.sha}}
-          target_url:  https://github.com/abdulrahmanMohamed2020/parabank/${{ github.run_number }}
