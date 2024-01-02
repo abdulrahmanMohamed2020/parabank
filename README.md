@@ -37,7 +37,7 @@ To use this automation framework, ensure that you have the following prerequisit
 
 To set up the framework locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/abdulrahmanMohamed2020/`
+1. Clone the repository: `git clone https://github.com/abdulrahmanMohamed2020/parabank`
 2. Install the required dependencies: `mvn install`
 
 ## Usage
