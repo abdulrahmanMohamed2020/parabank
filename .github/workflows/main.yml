@@ -32,7 +32,7 @@ jobs:
           npm install playwright
       - name: Start Local Application
         run: |
-          docker-compose -f docker-compose.yml up
+          docker-compose up -d
       - name: Wait for Application to Start
         run: sleep 30s
 
