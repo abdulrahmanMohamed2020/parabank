@@ -1,0 +1,1 @@
+verifyTotalBalance failed and screenshot taken.

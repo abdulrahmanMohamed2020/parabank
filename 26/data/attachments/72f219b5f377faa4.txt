@@ -1,0 +1,1 @@
+verifyLoanStatusWillBeDenied failed and screenshot taken.
