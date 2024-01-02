@@ -76,3 +76,8 @@ To execute the test cases, use the following command:
 * Page Object Model (POM) design pattern
 * Fluent design approach (method chaining)
 * Have a supporting factory package in src/main/java/com/qa/parabank file path, named **"factory"** that includes Capabilities classes which serve as a core engine for the project
+
+## How to check the execution log and open the latest execution reports from GitHub Actions:
+* You need to be logged in to GitHub as a prerequisite
+* Go to github-pages in the Environment tab
+* Click on **"View Deployment"**
