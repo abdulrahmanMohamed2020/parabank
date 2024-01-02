@@ -38,13 +38,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          docker exec -u 0 -it $HOSTNAME apt-get update
-          docker exec -u 0 -it $HOSTNAME apt-get install -y xvfb sudo
+          docker exec -u 0 -it $CONTAINER_ID apt-get update
+          docker exec -u 0 -it $CONTAINER_ID apt-get install -y xvfb sudo
 
       - name: Add a user with sudo privileges
         run: |
-          docker exec -u 0 -it $HOSTNAME useradd -m user
-          docker exec -u 0 -it $HOSTNAME usermod -aG sudo user
+          docker exec -u 0 -it $CONTAINER_ID useradd -m user
+          docker exec -u 0 -it $CONTAINER_ID usermod -aG sudo user
 
       - name: Build Docker Images
         run: |
@@ -52,14 +52,14 @@ jobs:
 
       - name: Start Local Application
         run: |
-          docker exec -u user -it $HOSTNAME xvfb-run -a docker-compose up -d
+          docker exec -u user -it $CONTAINER_ID xvfb-run -a docker-compose up -d
 
       - name: Wait for Application to Start
         run: sleep 60s
 
       - name: Run Playwright Java tests
         run: |
-          docker exec -u user -it $HOSTNAME mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng.xml
+          docker exec -u user -it $CONTAINER_ID mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng.xml
 
       - name: Stop Local Application
         run: |
