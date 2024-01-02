@@ -33,14 +33,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install
-          npm install playwright
-
-      - name: Install xvfb and sudo
-        run: |
           docker exec -u 0 -it ${{ runner.container.id }} apt-get update
           docker exec -u 0 -it ${{ runner.container.id }} apt-get install -y xvfb sudo
-          
+
       - name: Add a user with sudo privileges
         run: |
           docker exec -u 0 -it ${{ runner.container.id }} useradd -m user
@@ -55,9 +50,10 @@ jobs:
           docker exec -u user -it ${{ runner.container.id }} xvfb-run -a docker-compose up -d
 
       - name: Wait for Application to Start
-        run: sleep 60s 
+        run: sleep 60s
 
       - name: Run Playwright Java tests
+        run: |
           docker exec -u user -it ${{ runner.container.id }} mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng.xml
 
       - name: Stop Local Application
