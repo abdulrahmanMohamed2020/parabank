@@ -38,8 +38,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          CONTAINER_ID=$(docker ps -q)
-          docker exec -u 0 $CONTAINER_ID sh -c 'apt-get update && apt-get install -y xvfb sudo'
+          sudo apt-get update
+          sudo apt-get install -y xvfb sudo
 
       - name: Add a user with sudo privileges
         run: |
