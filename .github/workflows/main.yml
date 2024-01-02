@@ -38,11 +38,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          docker exec -u 0 -it $CONTAINER_ID apt-get update
-          docker exec -u 0 -it $CONTAINER_ID apt-get install -y xvfb sudo
+          CONTAINER_ID=$(docker ps -q)
+          docker exec -u 0 -it $CONTAINER_ID sh -c 'apt-get update && apt-get install -y xvfb sudo'
 
       - name: Add a user with sudo privileges
         run: |
+          CONTAINER_ID=$(docker ps -q)
           docker exec -u 0 -it $CONTAINER_ID useradd -m user
           docker exec -u 0 -it $CONTAINER_ID usermod -aG sudo user
 
@@ -52,6 +53,7 @@ jobs:
 
       - name: Start Local Application
         run: |
+          CONTAINER_ID=$(docker ps -q)
           docker exec -u user -it $CONTAINER_ID xvfb-run -a docker-compose up -d
 
       - name: Wait for Application to Start
@@ -59,6 +61,7 @@ jobs:
 
       - name: Run Playwright Java tests
         run: |
+          CONTAINER_ID=$(docker ps -q)
           docker exec -u user -it $CONTAINER_ID mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng.xml
 
       - name: Stop Local Application
