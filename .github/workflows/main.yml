@@ -4,27 +4,19 @@ on:
   push:
     branches:
       - main
-
+      
 jobs:
-  test:
+  playwright:
+    name: 'Playwright Tests'
     runs-on: ubuntu-latest
-
-    services:
-      docker:
-        image: docker:dind
-        ports:
-          - 2375:2375
-        options: --privileged
-
+    container:
+      image: mcr.microsoft.com/playwright/java:v1.40.0-jammy
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up Java
-        uses: actions/setup-java@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
         with:
-          distribution: 'adopt'
-          java-version: '11'
+          distribution: 'temurin'
+          java-version: '17'
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -35,16 +27,6 @@ jobs:
         run: |
           npm install
           npm install playwright
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb sudo
-
-      - name: Add a user with sudo privileges
-        run: |
-          sudo useradd -m user
-          sudo usermod -aG sudo user
 
       - name: Build Docker Images
         run: |
