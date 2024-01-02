@@ -28,10 +28,6 @@ jobs:
           npm install
           npm install playwright
 
-      - name: Build Docker Images
-        run: |
-          docker-compose build
-
       - name: Start Local Application
         run: |
           docker-compose up -d
