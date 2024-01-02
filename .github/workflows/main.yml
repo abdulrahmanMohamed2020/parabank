@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -53,10 +53,6 @@ jobs:
       - name: Start Local Application
         run: |
           docker exec -u user -it ${{ runner.container.id }} xvfb-run -a docker-compose up -d
-
-      - name: Start Local Application
-        run: |
-          docker-compose up -d
 
       - name: Wait for Application to Start
         run: sleep 60s 
