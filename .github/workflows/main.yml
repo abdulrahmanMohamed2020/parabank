@@ -14,7 +14,7 @@ jobs:
         image: docker:dind
         ports:
           - 2375:2375
-        #options: --privileged
+        options: --privileged
 
     steps:
       - name: Checkout Repository
@@ -38,12 +38,13 @@ jobs:
 
       - name: Install xvfb and sudo
         run: |
-          apt-get update && apt-get install -y xvfb sudo
-
+          docker exec -u 0 -it ${{ runner.container.id }} apt-get update
+          docker exec -u 0 -it ${{ runner.container.id }} apt-get install -y xvfb sudo
+          
       - name: Add a user with sudo privileges
         run: |
-          useradd -m user
-          usermod -aG sudo user
+          docker exec -u 0 -it ${{ runner.container.id }} useradd -m user
+          docker exec -u 0 -it ${{ runner.container.id }} usermod -aG sudo user
 
       - name: Build Docker Images
         run: |
@@ -51,7 +52,7 @@ jobs:
 
       - name: Start Local Application
         run: |
-          sudo -u user xvfb-run -a docker-compose up -d
+          docker exec -u user -it ${{ runner.container.id }} xvfb-run -a docker-compose up -d
 
       - name: Start Local Application
         run: |
@@ -61,7 +62,7 @@ jobs:
         run: sleep 60s 
 
       - name: Run Playwright Java tests
-        run: mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng.xml
+          docker exec -u user -it ${{ runner.container.id }} mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng.xml
 
       - name: Stop Local Application
         run: |
